@@ -3,7 +3,9 @@
 venv/
 env/
 __pycache__/
+app/**/__pycache__/
 *.py[cod]
+app/**/*.pyc
 *.pyo
 *.pyd
 .pytest_cache/
