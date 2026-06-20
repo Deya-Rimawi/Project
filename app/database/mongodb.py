@@ -28,8 +28,15 @@ def init_database() -> None:
     if _client is not None and _database is not None:
         return
 
-    mongo_uri = os.getenv("MONGODB_URI", "").strip()
-    database_name = os.getenv("MONGODB_DB", "LRMIS_DB")
+    mongo_uri = (
+        os.getenv("MONGODB_URI", "")
+        or os.getenv("MONGO_URI", "")
+    ).strip()
+    database_name = (
+        os.getenv("MONGODB_DB", "")
+        or os.getenv("DB_NAME", "")
+        or "LRMIS_DB"
+    ).strip()
     server_selection_timeout_ms = int(os.getenv("MONGODB_SERVER_SELECTION_TIMEOUT_MS", "5000"))
 
     if not mongo_uri:
