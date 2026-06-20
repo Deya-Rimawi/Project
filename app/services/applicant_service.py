@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from uuid import uuid4
 
 from fastapi import HTTPException, status
+from bson import ObjectId
 from pymongo.database import Database
 
 from app.database.mongodb import get_utc_now
@@ -126,8 +127,15 @@ class ApplicantService:
         )
 
     def _serialize(self, document: dict) -> dict:
-        serialized = dict(document)
-        for key in ("created_at", "updated_at"):
-            if isinstance(serialized.get(key), datetime):
-                serialized[key] = serialized[key].isoformat()
-        return serialized
+        def convert(value: object) -> object:
+            if isinstance(value, ObjectId):
+                return str(value)
+            if isinstance(value, datetime):
+                return value.isoformat()
+            if isinstance(value, dict):
+                return {key: convert(item) for key, item in value.items() if key != "_id"}
+            if isinstance(value, list):
+                return [convert(item) for item in value]
+            return value
+
+        return convert(dict(document))

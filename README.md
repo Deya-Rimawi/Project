@@ -77,27 +77,10 @@ uvicorn app.main:app --reload
 http://127.0.0.1:8000/docs
 ```
 
-## Docker
-
-Run the API and a local MongoDB with Docker Compose:
-
-```bash
-docker compose up --build
-```
-
-Then open:
-
-```text
-http://127.0.0.1:8000/docs
-```
-
-If you want to use an external MongoDB instead, set `MONGODB_URI` and `MONGODB_DB` in your environment or `.env` file before starting the container.
-
 ## Environment Variables
 
 - `MONGODB_URI`: MongoDB connection string. Defaults to `mongodb://localhost:27017`
-- `MONGODB_DB`: Database name. Defaults to `LRMIS_DB`
-- `MONGO_URI` and `DB_NAME` are also accepted for compatibility with the existing `.env` file
+- `MONGODB_DB`: Database name. Defaults to `lrmis`
 
 ## API Endpoints
 
